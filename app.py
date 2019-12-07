@@ -16,7 +16,6 @@ api = Api(app)
 
 jwt = JWT(app, authenticate, identity) # /auth endopoint
 
-
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>')
 api.add_resource(ItemList, '/items')
@@ -25,4 +24,6 @@ api.add_resource(UserRegister, '/register')
 
 #When we execute an app python named it with the name __main__ so, if we import this file from another, it won't run this main part.
 if __name__ == '__main__': 
+    from db import db
+    db.init_app(app)
     app.run(port=5001, debug=True)
