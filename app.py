@@ -1,3 +1,5 @@
+import os # Give access to enviroment variables
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -9,7 +11,11 @@ from resources.store import Store, StoreList
 
 #We dont need to call JSONIFY in flask restful cause it do by itself
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+#SQLITE3_PATH#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db') 
+    #SQLITE as a secondary database bring us an local develoment auxiliar database, also instead first one it uses the second one
+    #
+    #In requ..txt psycopg2 its a popular librery to interact to posgresql 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key = 'jose'
 api = Api(app)
